@@ -8,7 +8,6 @@ import {
 } from 'typeorm';
 
 import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
-import Order from '@modules/orders/infra/typeorm/entities/Order';
 
 @Entity('products')
 class Product {
@@ -18,14 +17,14 @@ class Product {
   @Column()
   name: string;
 
-  @Column('decimal', { precision: 5, scale: 2 })
+  @Column('decimal', { precision: 10, scale: 2 })
   price: number;
 
-  @Column()
+  @Column('int4')
   quantity: number;
 
-  // @OneToMany(() => Order, order => order.order_products)
-  // order_products: OrdersProducts[];
+  @OneToMany(() => OrdersProducts, ordersProducts => ordersProducts.order)
+  order_products: OrdersProducts[];
 
   @CreateDateColumn()
   created_at: Date;
